@@ -56,7 +56,7 @@ services:
       - ALLOWED_HOSTS=*
       - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
-      - PLUGINS=["netbox_proxbox"]
+      - PLUGINS=netbox_proxbox
     volumes:
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
@@ -83,7 +83,7 @@ services:
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
-      - PLUGINS=["netbox_proxbox"]
+      - PLUGINS=netbox_proxbox
     volumes:
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
@@ -108,7 +108,7 @@ services:
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
-      - PLUGINS=["netbox_proxbox"]
+      - PLUGINS=netbox_proxbox
     volumes:
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
