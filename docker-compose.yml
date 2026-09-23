@@ -56,8 +56,8 @@ services:
       - ALLOWED_HOSTS=*
       - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
-      - PLUGINS=netbox_proxbox
     volumes:
+      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
@@ -83,8 +83,8 @@ services:
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
-      - PLUGINS=netbox_proxbox
     volumes:
+      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
@@ -108,8 +108,8 @@ services:
       - REDIS_CACHE_HOST=redis-cache
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
-      - PLUGINS=netbox_proxbox
     volumes:
+      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
