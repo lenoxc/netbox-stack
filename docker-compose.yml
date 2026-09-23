@@ -114,8 +114,20 @@ services:
 
 volumes:
   netbox-postgres-data:
+    external: true
+    name: netbox_netbox-postgres-data
   netbox-redis-data:
+    external: true
+    name: netbox_netbox-redis-data
   netbox-redis-cache-data:
+    external: true
+    name: netbox_netbox-redis-cache-data
   netbox-media-files:
+    external: true
+    name: netbox_netbox-media-files
   netbox-reports-files:
+    external: true
+    name: netbox_netbox-reports-files
   netbox-scripts-files:
+    external: true
+    name: netbox_netbox-scripts-files
