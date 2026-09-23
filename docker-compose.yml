@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: netbox-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: netbox
+      POSTGRES_USER: netbox
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - netbox-postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: netbox-redis
+    restart: unless-stopped
+    command: sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - netbox-redis-data:/data
+
+  redis-cache:
+    image: redis:7-alpine
+    container_name: netbox-redis-cache
+    restart: unless-stopped
+    command: sh -c 'redis-server --requirepass $$REDIS_PASSWORD'
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - netbox-redis-cache-data:/data
+
+  netbox:
+    build: .
+    image: netbox-custom:latest
+    container_name: netbox-app
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+      - redis-cache
+    ports:
+      - "8085:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CACHE_HOST=redis-cache
+      - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
+      - SECRET_KEY=${NETBOX_SECRET_KEY}
+      - ALLOWED_HOSTS=*
+      - SUPERUSER_EMAIL=${ADMIN_EMAIL}
+      - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
+      - PLUGINS=["netbox_proxbox"]
+    volumes:
+      - netbox-media-files:/opt/netbox/netbox/media
+      - netbox-reports-files:/opt/netbox/netbox/reports
+      - netbox-scripts-files:/opt/netbox/netbox/scripts
+
+  netbox-worker:
+    image: netbox-custom:latest
+    container_name: netbox-worker
+    restart: unless-stopped
+    depends_on:
+      - netbox
+    command:
+      - /opt/netbox/venv/bin/python
+      - /opt/netbox/netbox/manage.py
+      - rqworker
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CACHE_HOST=redis-cache
+      - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
+      - SECRET_KEY=${NETBOX_SECRET_KEY}
+      - PLUGINS=["netbox_proxbox"]
+    volumes:
+      - netbox-media-files:/opt/netbox/netbox/media
+      - netbox-reports-files:/opt/netbox/netbox/reports
+      - netbox-scripts-files:/opt/netbox/netbox/scripts
+
+  netbox-housekeeping:
+    image: netbox-custom:latest
+    container_name: netbox-housekeeping
+    restart: unless-stopped
+    depends_on:
+      - netbox
+    command:
+      - /opt/netbox/housekeeping.sh
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CACHE_HOST=redis-cache
+      - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
+      - SECRET_KEY=${NETBOX_SECRET_KEY}
+      - PLUGINS=["netbox_proxbox"]
+    volumes:
+      - netbox-media-files:/opt/netbox/netbox/media
+      - netbox-reports-files:/opt/netbox/netbox/reports
+      - netbox-scripts-files:/opt/netbox/netbox/scripts
+
+volumes:
+  netbox-postgres-data:
+  netbox-redis-data:
+  netbox-redis-cache-data:
+  netbox-media-files:
+  netbox-reports-files:
+  netbox-scripts-files:
