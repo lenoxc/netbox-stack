@@ -61,11 +61,13 @@ services:
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
       
-  proxbox-api:
+ proxbox-api:
     image: emersonfelipesp/proxbox-api:latest
     container_name: proxbox-api
     ports:
       - "8800:8000"
+    extra_hosts:
+      - "proxmox.clenox.dev:192.168.1.4"
     restart: unless-stopped
 
   netbox-worker:
