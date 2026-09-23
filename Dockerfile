@@ -17,7 +17,7 @@ RUN /opt/netbox/venv/bin/pip install --upgrade setuptools wheel
 # 4. Install ONLY Proxbox for now to bypass the build crash
 RUN /opt/netbox/venv/bin/pip install netbox-proxbox
 
-# 5. Bake the configuration directly into the image
-RUN mkdir -p /etc/netbox/config && echo "PLUGINS = ['netbox_proxbox', 'netbox_openbao']" > /etc/netbox/config/plugins.py
+# 5. Bake the configuration directly into the image (Removed openbao from this list)
+RUN mkdir -p /etc/netbox/config && echo "PLUGINS = ['netbox_proxbox']" > /etc/netbox/config/plugins.py
 
 USER netbox
