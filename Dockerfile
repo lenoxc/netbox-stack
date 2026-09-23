@@ -1,4 +1,4 @@
-FROM netboxcommunity/netbox:latest
+FROM netboxcommunity/netbox:v4.7.0
 
 USER root
 
