@@ -34,7 +34,7 @@ services:
 
   netbox:
     build: .
-    image: netbox-custom:v4
+    image: netbox-custom:v5
     container_name: netbox-app
     restart: unless-stopped
     depends_on:
@@ -63,7 +63,7 @@ services:
 
   netbox-worker:
     build: .
-    image: netbox-custom:v4
+    image: netbox-custom:v5
     container_name: netbox-worker
     restart: unless-stopped
     depends_on:
@@ -89,7 +89,7 @@ services:
 
   netbox-housekeeping:
     build: .
-    image: netbox-custom:v4
+    image: netbox-custom:v5
     container_name: netbox-housekeeping
     restart: unless-stopped
     depends_on:
