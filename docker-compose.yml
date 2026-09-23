@@ -56,7 +56,6 @@ services:
       - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
     volumes:
-      - ./configuration:/etc/netbox/config:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
@@ -82,7 +81,6 @@ services:
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
     volumes:
-      - ./configuration:/etc/netbox/config:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
@@ -106,7 +104,6 @@ services:
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
     volumes:
-      - ./configuration:/etc/netbox/config:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
