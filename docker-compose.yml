@@ -61,7 +61,7 @@ services:
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
       
- proxbox-api:
+  proxbox-api:
     image: emersonfelipesp/proxbox-api:latest
     container_name: proxbox-api
     ports:
