@@ -34,7 +34,7 @@ services:
 
   netbox:
     build: .
-    image: netbox-custom:v2
+    image: netbox-custom:v3
     container_name: netbox-app
     restart: unless-stopped
     depends_on:
@@ -57,14 +57,13 @@ services:
       - SUPERUSER_EMAIL=${ADMIN_EMAIL}
       - SUPERUSER_PASSWORD=${ADMIN_PASSWORD}
     volumes:
-      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
 
   netbox-worker:
     build: .
-    image: netbox-custom:v2
+    image: netbox-custom:v3
     container_name: netbox-worker
     restart: unless-stopped
     depends_on:
@@ -84,14 +83,13 @@ services:
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
     volumes:
-      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
 
   netbox-housekeeping:
     build: .
-    image: netbox-custom:v2
+    image: netbox-custom:v3
     container_name: netbox-housekeeping
     restart: unless-stopped
     depends_on:
@@ -109,7 +107,6 @@ services:
       - REDIS_CACHE_PASSWORD=${REDIS_PASSWORD}
       - SECRET_KEY=${NETBOX_SECRET_KEY}
     volumes:
-      - ./configuration/plugins.py:/etc/netbox/config/plugins.py:ro
       - netbox_netbox-media-files:/opt/netbox/netbox/media
       - netbox_netbox-reports-files:/opt/netbox/netbox/reports
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
