@@ -137,3 +137,5 @@ volumes:
     external: true
   netbox_netbox-scripts-files:
     external: true
+  netbox_proxbox-api-data:
+    external: true
