@@ -62,10 +62,14 @@ services:
       - netbox_netbox-scripts-files:/opt/netbox/netbox/scripts
       
   proxbox-api:
-    image: emersonfelipesp/proxbox-api:latest
+    image: emersonfelipesp/proxbox-api:0.0.23.post1
     container_name: proxbox-api
     ports:
       - "8800:8000"
+    environment:
+      - PROXBOX_ENCRYPTION_KEY=${PROXBOX_ENCRYPTION_KEY}
+    volumes:
+      - netbox_proxbox-api-data:/data
     extra_hosts:
       - "proxmox.clenox.dev:192.168.1.4"
     restart: unless-stopped
